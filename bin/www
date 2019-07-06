@@ -1,0 +1,131 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('api:server');
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
+
+
+/****
+ * 
+ *  SSL Server
+ *  Define SSL Files
+ */
+
+ // For commercial SSL
+ var ssl_files = {
+  key: __dirname+'/../certs/mycert.key',
+  cert: __dirname+'/../certs/mycert.crt',
+  ca: __dirname+'/../certs/intermediate_mycert_ca.crt'
+}
+
+// INITIALIZE HTTPS if CERT exists
+
+/* // For self signed
+key: __dirname+'/../certs/key.pem',
+cert: __dirname+'/../certs/cert.pem'
+*/
+
+if (fs.existsSync(ssl_files.key)) {
+  var options = {
+    key: fs.readFileSync(ssl_files.key),
+    cert: fs.readFileSync(ssl_files.cert),
+    ca: [
+      fs.readFileSync(ssl_files.ca)
+    ],
+  };
+
+  var port_ssl = normalizePort(process.env.PORT_SSL || '4000');
+  var server_ssl = https.createServer(options,app);
+
+  
+  server_ssl.listen(port_ssl);
+  server_ssl.on('error', onError);
+  server_ssl.on('listening', onListening);
+}
+
+/****
+ * 
+ *  NON SSL Server
+ *
+ */
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '3000');
+var server = http.createServer(app);
+
+server.listen(port);
+
+server.on('error', onError);
+server.on('listening', onListening);
+  
+
+
+
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}

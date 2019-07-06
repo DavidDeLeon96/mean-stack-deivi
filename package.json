@@ -1,0 +1,32 @@
+{
+  "name": "kio-api",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "~1.16.0",
+    "config": "^1.25.1",
+    "connect-multiparty": "^2.0.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.0",
+    "express": "~4.14.1",
+    "google-auth-library": "^0.10.0",
+    "hbs": "~4.0.1",
+    "jwt-simple": "^0.5.1",
+    "mailgun-js": "^0.10.1",
+    "moment": "^2.18.1",
+    "mongoose": "^5.5.6",
+    "mongoose-pagination": "^1.0.0",
+    "morgan": "~1.7.0",
+    "node-pushnotifications": "^1.0.18",
+    "serve-favicon": "~2.3.2",
+    "speakingurl": "^13.0.0",
+    "swagger-ui-express": "^1.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}

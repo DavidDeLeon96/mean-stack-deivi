@@ -1,0 +1,444 @@
+{
+    "swagger": "1.0",
+    "info": {
+        "title": "My API",
+        "description": "Description of my API",
+        "version": "1.0.0"
+    },
+    "host": "localhost:3000",
+    "schemes": [
+        "http"
+    ],
+    "basePath": "/v1",
+    "produces": [
+        "application/json"
+    ],
+    "tags": [
+        {
+            "name": "Usuarios",
+            "description": "Mange users"
+        },
+        {
+            "name": "Locaciones",
+            "description": "Manage user locations"
+        }
+    ],
+    "paths": {
+        "/usuarios": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Return a list of users",
+                "operationId": "getUsers",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of users",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/User"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Creates a new user.",
+                "operationId": "addUsers",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "required": true,
+                        "name": "user",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User created",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/usuarios/{id}": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Return a user details",
+                "operationId": "getUserById",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id of the user to retrive information",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An user information",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Update user.",
+                "operationId": "updateUserById",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user to update",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Updated user",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Delete user.",
+                "operationId": "deleteUserById",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted user"
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "GoogleToken": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string",
+                    "description": "Google token."
+                }
+            }
+        },
+        "Token": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string",
+                    "description": "JWT token."
+                }
+            }
+        },
+        "TokenStatus": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string",
+                    "description": "JWT token."
+                },
+                "valid": {
+                    "type": "boolean",
+                    "description": "Valid or not"
+                }
+            }
+        },
+        "Feeling": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Feeling name."
+                },
+                "slug": {
+                    "type": "string",
+                    "description": "Feeling slug."
+                }
+            }
+        },
+        "User": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "description": "KIO user email."
+                },
+                "name": {
+                    "type": "string",
+                    "description": "KIO user name."
+                },
+                "position": {
+                    "type": "string",
+                    "description": "KIO user position."
+                },
+                "location": {
+                    "type": "string",
+                    "description": "KIO user position."
+                },
+                "avatar": {
+                    "type": "string",
+                    "description": "KIO user avatar."
+                }
+            }
+        },
+        "Publication": {
+            "type": "object",
+            "properties": {
+                "contenido": {
+                    "type": "string",
+                    "description": "Publication content."
+                },
+                "geo": {
+                    "type": "string",
+                    "description": "Publication geolocation."
+                },
+                "status": {
+                    "type": "integer",
+                    "description": "Publication status."
+                },
+                "_area": {
+                    "type": "string",
+                    "description": "KIO area ID."
+                },
+                "_location": {
+                    "type": "string",
+                    "description": "KIO location ID."
+                },
+                "_feeling": {
+                    "type": "string",
+                    "description": "Feeling ID."
+                },
+                "_user": {
+                    "type": "string",
+                    "description": "KIO user ID."
+                }
+            }
+        },
+        "Answer": {
+            "type": "object",
+            "properties": {
+                "respuesta": {
+                    "type": "string",
+                    "description": "Publication answer."
+                },
+                "_user": {
+                    "type": "string",
+                    "description": "User ID whom creates the response."
+                }
+            }
+        },
+        "Notification": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "description": "Publication answer."
+                },
+                "message": {
+                    "type": "string",
+                    "description": "Publication answer."
+                },
+                "_publication": {
+                    "type": "string",
+                    "description": "ID of the publication that belongs this notification"
+                },
+                "_user": {
+                    "type": "string",
+                    "description": "ID of user that sends the notification"
+                },
+                "users": {
+                    "schema": {
+                            "type": "array",
+                            "items": {
+                                "_user": {
+                                    "type": "string",
+                                    "description": "User ID"
+                                },
+                                "viewed": {
+                                    "type": "boolean",
+                                    "description": "True or false if user has viewed the notification"
+                                }
+                            }
+                        },
+                    "description": "Array of users ID that receives this notification."
+                },
+                "created_at": {
+                    "type": "dateTime",
+                    "description": "Notification creation date."
+                }
+            }
+        },
+        "Files": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Filename."
+                }
+            }
+        },
+        "Area": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Area name."
+                }
+            }
+        },
+        "Location": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "User location name."
+                }
+            }
+        },
+        "Setting": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Setting name."
+                },
+                "slug": {
+                    "type": "string",
+                    "description": "Setting slug."
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Setting value."
+                }
+            }
+        },
+        "Catalog": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "item attribute name, add thus as much as model needs"
+                },
+                "order": {
+                    "type": "number",
+                    "description": "item sort order"
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

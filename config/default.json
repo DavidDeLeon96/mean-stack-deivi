@@ -1,0 +1,18 @@
+{
+  "api_path": "/api",
+  "api_versions": [
+    "v1"
+  ],
+  "public_routes": [
+    "favicon.ico"
+  ],
+  "public_directories": [
+    "api-docs"
+  ],
+  "upload_dir": "./uploads/publications/",
+  "upload_types": [
+    "image/jpeg",
+    "image/png",
+    "application/pdf"
+  ]
+}
