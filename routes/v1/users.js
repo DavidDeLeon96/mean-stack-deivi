@@ -10,6 +10,8 @@ module.exports = function (router) {
     router.delete('/usuarios/:id', UserController.deleteUserById );
 
     router.post("/usuarios/:id_usuario/devices", UserController.addUserDevice);
+    router.delete("/usuarios/:id_usuario/devices/:id", UserController.deleteUserDevice);
+    router.patch("/usuarios/:id_usuario/devices/:id", UserController.updateUserDevice);
 }
 
 //app.use('/', routes);

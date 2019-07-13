@@ -123,8 +123,7 @@ exports.deleteUserById = function(req,res,next){
 }
 
 exports.addUserDevice = function(req,res,next){
-	res.send(req.body);
-	/*
+	
 	var device = req.body;
 	User.findByIdAndUpdate(req.params.id_usuario, {$push: {devices: device}}, {new: true} ).exec((err, user) => {
 		if(err){
@@ -139,6 +138,40 @@ exports.addUserDevice = function(req,res,next){
 			}
 		}
 	});
-	*/
+	
 }
 
+exports.deleteUserDevice = function(req, res,  next){
+	User.findByIdAndUpdate(req.params.id_usuario, {$pull: {devices: {_id:req.params.id}}}, {new: true}).exec((err, user) =>{
+		if(err){
+			console.log(err);
+			next({status: 200, message: 'Error deleting device.'});
+		} else {
+			if(user)
+				res.send(user);	//res.json
+			else{
+				console.log('error')
+				next({status: 200, message: 'Error deleting device.'});
+			}
+		}
+	});
+}	
+
+exports.updateUserDevice = function(req, res, next){
+	//console.log("Si entro aqui :D",req.params.id)
+	User.update({"devices._id":req.params.id }, {'$set': {
+		'devices.$.marca': 'Apple',
+	}},{new: true}).exec((err, user) =>{
+		if(err){
+			console.log(err);
+			next({status: 200, message: 'Error updating device.'});
+		} else {
+			if(user)
+				res.send(user);	//res.json
+			else{
+				console.log('error')
+				next({status: 200, message: 'Error updating device.'});
+			}
+		}
+	});
+}

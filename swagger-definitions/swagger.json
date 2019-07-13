@@ -9,7 +9,7 @@
     "schemes": [
         "http"
     ],
-    "basePath": "/v1",
+    "basePath": "/api/v1",
     "produces": [
         "application/json"
     ],
@@ -32,12 +32,6 @@
                 "summary": "Return a list of users",
                 "operationId": "getUsers",
                 "parameters": [
-                    {
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true,
-                        "type": "string"
-                    }
                 ],
                 "responses": {
                     "200": {
@@ -62,14 +56,9 @@
                     "Usuarios"
                 ],
                 "summary": "Creates a new user.",
-                "operationId": "addUsers",
+                "operationId": "addUser",
                 "parameters": [
-                    {
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true,
-                        "type": "string"
-                    },
+                    
                     {
                         "in": "body",
                         "required": true,
@@ -212,6 +201,41 @@
         }
     },
     "definitions": {
+        "User": {
+            "type": "object",
+            "properties": {
+                "f_name": {
+                    "type": "string",
+                    "description": "Client user name.",
+                    "required": true
+                },"l_name": {
+                    "type": "string",
+                    "description": "Client user last name.",
+                    "required": true
+                },
+                "email": {
+                    "type": "string",
+                    "description": "Must be unique",
+                    "required": true
+                },
+                "birth_date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Client user birth date.",
+                    "required": true
+                },
+                "n_user": {
+                    "type": "string",
+                    "description": "Client user number.",
+                    "required": true
+                },
+                "tel": {
+                    "type": "number",
+                    "description": "Client user telephone."
+                }
+                
+            }
+        },
         "GoogleToken": {
             "type": "object",
             "properties": {
@@ -256,31 +280,7 @@
                 }
             }
         },
-        "User": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string",
-                    "description": "KIO user email."
-                },
-                "name": {
-                    "type": "string",
-                    "description": "KIO user name."
-                },
-                "position": {
-                    "type": "string",
-                    "description": "KIO user position."
-                },
-                "location": {
-                    "type": "string",
-                    "description": "KIO user position."
-                },
-                "avatar": {
-                    "type": "string",
-                    "description": "KIO user avatar."
-                }
-            }
-        },
+        
         "Publication": {
             "type": "object",
             "properties": {

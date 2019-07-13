@@ -12,7 +12,7 @@ var UserSchema = Schema({
     tel: {type: Number},
     devices: [new Schema({
         marca: {type: String, required: true},
-        n_serie: {type: String, required: true},
+        n_serie: {type: String, required: true, unique: true},
         modelo: {type: String, required: true},
         f_asig: {type: Date, required: true},
     })],

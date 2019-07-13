@@ -1,0 +1,28 @@
+"devices": {
+                    "schema":{
+                        "type": "array",
+                        "items": {
+                            "marca": {
+                                "type": "string",
+                                "description": "Client device brand",
+                                "required": true
+                            },
+                            "n_serie": {
+                                "type":"string",
+                                "description": "Must be unique",
+                                "required": true
+                            },
+                            "modelo": {
+                                "type":"string",
+                                "description": "Client device model",
+                                "required": true
+                            },
+                            "f_asig": {
+                                "type":"dateTime",
+                                "description": "Client device asignation date",
+                                "required": true
+                            }
+                            
+                        }
+                    } 
+                }
