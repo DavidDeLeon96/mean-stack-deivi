@@ -7,6 +7,7 @@ var UserSchema = Schema({
 	f_name: {type: String, required: true},
     l_name: {type: String, required: true},
     email: {type: String, required: true, unique: true},
+    password: {type: String, required: true, select: false},
     birth_date: {type: Date, required: true},
     n_user: {type: String, required: true},
     tel: {type: Number},

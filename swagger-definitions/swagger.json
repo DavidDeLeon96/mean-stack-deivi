@@ -21,6 +21,14 @@
         {
             "name": "Locaciones",
             "description": "Manage user locations"
+        },
+        {
+            "name:": "Auth",
+            "description": "manage authentification"
+        },
+        {
+            "name:": "Token Validation",
+            "description": "manage authentification"
         }
     ],
     "paths": {
@@ -93,12 +101,6 @@
                 "operationId": "getUserById",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
                         "name": "id",
                         "in": "path",
                         "description": "Id of the user to retrive information",
@@ -128,12 +130,7 @@
                 "summary": "Update user.",
                 "operationId": "updateUserById",
                 "parameters": [
-                    {
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true,
-                        "type": "string"
-                    },
+                    
                     {
                         "name": "id",
                         "in": "path",
@@ -173,12 +170,6 @@
                 "operationId": "deleteUserById",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
                         "name": "id",
                         "in": "path",
                         "description": "ID of the user to delete",
@@ -198,6 +189,54 @@
                     }
                 }
             }
+        },
+        "/auth/login":{
+            "post":{
+                "tags":[
+                    "Auth"
+                ],
+                "summary":"Auth user",
+                "operationId":"doLogin",
+                "parameters":[
+                    {
+                        "in":"body",
+                        "required": true,
+                        "name": "Auth",
+                        "schema":{
+                            "$ref":"#/definitions/Auth"
+                        }
+                    }
+                ]
+            }
+
+        },
+        "/auth/validate-token":{
+            "post":{
+                "tags":[
+                    "Auth"
+                ],
+                "summary":"Auth validation token",
+                "operationId":"validateToken",
+                "parameters":[
+                    {
+                        "in":"body",
+                        "required": true,
+                        "name": "token",
+                        
+                        "schema": {
+                            "type": "object",
+                            "properties":{
+                                "token":{
+                                    "type":"string",
+                                    "description":"Auth token."  
+                                }
+                                
+                            }
+                        }
+                    }
+                ]
+            }
+
         }
     },
     "definitions": {
@@ -218,6 +257,11 @@
                     "description": "Must be unique",
                     "required": true
                 },
+                "password":{
+                    "type": "string",
+                    "description": "Password",
+                    "required": true
+                },
                 "birth_date": {
                     "type": "string",
                     "format": "date",
@@ -232,6 +276,22 @@
                 "tel": {
                     "type": "number",
                     "description": "Client user telephone."
+                }
+                
+            }
+        },
+        "Auth": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "description": "Email auth.",
+                    "required": true
+                },
+                "password": {
+                    "type": "string",
+                    "description": "Password auth.",
+                    "required": true
                 }
                 
             }

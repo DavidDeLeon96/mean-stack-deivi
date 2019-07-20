@@ -1,4 +1,5 @@
 'use strict'
+const bcrypt = require('bcrypt');
 
 var User = require('../models/user');
 
@@ -72,16 +73,14 @@ exports.addUser = function(req,res,next){
 
 
 exports.updateUserById = function(req,res,next){
-	/**
-	* Delete KIO user.
-	*
-	* id Long ID of th KIO user to update
-	* returns User
-	**/
+	
 	var user = {};
 	var params = req.body;
 	Object.keys(req.body).forEach((key)=>{
 		user[key] = req.body[key];		//
+		if(key=="password"){
+			user[key] = bcrypt.hashSync(user[key], 17);
+		}
 	});
 	
 					//busca por aqui		actualizalo		regresa el nuevo en true	ejecutalo en func arrow
